@@ -1,4 +1,4 @@
-CONCEPT_RETINAL_PROJECTION: Integration of Retinal Projection in Cognitive AR Interface
+CONCEPT_RETINAL_PROJECTION: Integration of Retinal Projection in Cognitive AR Interface 
 
 ================================================================================
 Overview
