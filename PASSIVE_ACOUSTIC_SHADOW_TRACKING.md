@@ -1,4 +1,4 @@
-# Inverse Acoustic Scattering (IAS) for Ultrasonic Glove Hand Tracking
+# Passive Acoustic Shadow Tracking (PAST) for Ultrasonic Glove Hand Tracking
 
 ## Overview
 
