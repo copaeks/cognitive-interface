@@ -263,4 +263,5 @@ This module embodies the core philosophy of the Cognitive Interface:
 Technology that serves the user, not the other way around.
 
 License: MIT
-Contact: github.com/copaeks | X: @copaeks
+Contact: github.com/copaeks | X: @IVF020420
+
