@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="cover_cognitive_ar.png" width="800" alt="Cognitive AR Interface">
+<img width="2752" height="1536" alt="cover_cognitive_ar" src="https://github.com/user-attachments/assets/40c05a3a-2adb-483d-8c27-ea1db7910411" />
 
 # 🧠 Cognitive AR Interface
 
@@ -47,7 +47,7 @@ Instead of tracking reflections like everyone else, we track **acoustic shadows*
 
 ## 🔬 Core Technology: Passive Acoustic Shadow Tracking (PAST)
 
-<img src="acoustic_field.png" width="700" alt="Acoustic Field with Hand Shadow">
+<img width="1049" height="1121" alt="beam_pattern" src="https://github.com/user-attachments/assets/22d82ffa-b51a-493c-bd13-5d07a2f8f0f2" />
 
 We use **4 MEMS microphones** + a **passive metamaterial glove** to detect the shadow cast by your hand in an ultrasonic field. No active reflection. No cameras. No power in the glove.
 
@@ -56,6 +56,8 @@ We use **4 MEMS microphones** + a **passive metamaterial glove** to detect the s
 - Precision: **0.76 mm**
 - Power: **767 mW** total system
 - Complexity: **O(1)**
+
+<img width="1260" height="974" alt="acoustic_field" src="https://github.com/user-attachments/assets/41fa40de-1211-406f-b72f-afcd01bd4db2" />
 
 ---
 
