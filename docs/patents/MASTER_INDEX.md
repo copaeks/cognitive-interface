@@ -1,4 +1,4 @@
-# COGNITIVE AR EMPIRE 2035 — MASTER INDEX
+# COGNITIVE AR — MASTER INDEX
 ## The Shadow Principle Platform
 
 **Founder**: Iván Vankov Fortanet  
