@@ -1,0 +1,180 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acoustic-sensor-hal"
+version = "0.1.0"
+description = "Hardware Abstraction Layer with Sim-to-Real Bridge for Acoustic Sensor Arrays"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+authors = [
+    {name = "Acoustic Sensor Team"},
+]
+keywords = [
+    "hardware abstraction",
+    "sim-to-real",
+    "acoustic sensors",
+    "microphone array",
+    "raspberry pi",
+    "ultrasonic",
+    "metamaterial glove",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: System :: Hardware",
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+raspberry-pi = [
+    "RPi.GPIO>=0.7.0",
+    "smbus2>=0.4.0",
+    "spidev>=3.6",
+    "sounddevice>=0.4.0",
+    "pigpio>=1.78",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "mypy>=1.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+all = [
+    "acoustic-sensor-hal[raspberry-pi,dev]",
+]
+
+[project.scripts]
+calibrate-array = "scripts.calibrate_array:main"
+rpi-setup = "examples.raspberry_pi_setup:main"
+
+[project.urls]
+Homepage = "https://github.com/acoustic-sensors/hal"
+Documentation = "https://acoustic-sensors.github.io/hal"
+Repository = "https://github.com/acoustic-sensors/hal.git"
+Issues = "https://github.com/acoustic-sensors/hal/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hal*", "drivers*", "calibration*", "sim2real*", "scripts*", "examples*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml", "*.txt"]
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # Pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "D",  # pydocstyle
+    "UP", # pyupgrade
+]
+ignore = [
+    "D100",  # Missing docstring in public module
+    "D104",  # Missing docstring in public package
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "RPi.GPIO",
+    "smbus2",
+    "spidev",
+    "sounddevice",
+    "pigpio",
+    "board",
+    "busio",
+    "digitalio",
+    "pwmio",
+    "analogio",
+    "adafruit_mcp3xxx.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-v",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "hardware: marks tests that require hardware",
+    "raspberry_pi: marks tests that require Raspberry Pi",
+]
+
+[tool.coverage.run]
+source = ["hal", "drivers", "calibration", "sim2real"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

@@ -1,0 +1,386 @@
+version: '3.8'
+
+# Docker Compose for Distributed Shadow Network
+# Deploys 1 coordinator + 8 array nodes for full simulation
+
+services:
+  # Coordinator node (also acts as array 0)
+  coordinator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-coordinator
+    hostname: coordinator
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_0', Vector2D(10.0, 10.0), 0.0)
+          node = ShadowNode('array_0', pos, is_coordinator=True,
+                          udp_port=5000, tcp_port=6000)
+          await node.start()
+          print('Coordinator started on array_0')
+          
+          # Keep running
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5000:5000/udp"
+      - "6000:6000/tcp"
+    environment:
+      - NODE_ID=array_0
+      - ROLE=master
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.connect(('localhost', 6000)); s.close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Array nodes 1-8
+  array-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-1
+    hostname: array-1
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_1', Vector2D(3.0, 3.0), 0.0)
+          node = ShadowNode('array_1', pos, is_coordinator=False,
+                          udp_port=5001, tcp_port=6001)
+          await node.start()
+          print('Array 1 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5001:5001/udp"
+      - "6001:6001/tcp"
+    environment:
+      - NODE_ID=array_1
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-2
+    hostname: array-2
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_2', Vector2D(17.0, 3.0), 0.0)
+          node = ShadowNode('array_2', pos, is_coordinator=False,
+                          udp_port=5002, tcp_port=6002)
+          await node.start()
+          print('Array 2 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5002:5002/udp"
+      - "6002:6002/tcp"
+    environment:
+      - NODE_ID=array_2
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-3
+    hostname: array-3
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_3', Vector2D(3.0, 17.0), 0.0)
+          node = ShadowNode('array_3', pos, is_coordinator=False,
+                          udp_port=5003, tcp_port=6003)
+          await node.start()
+          print('Array 3 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5003:5003/udp"
+      - "6003:6003/tcp"
+    environment:
+      - NODE_ID=array_3
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-4
+    hostname: array-4
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_4', Vector2D(17.0, 17.0), 0.0)
+          node = ShadowNode('array_4', pos, is_coordinator=False,
+                          udp_port=5004, tcp_port=6004)
+          await node.start()
+          print('Array 4 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5004:5004/udp"
+      - "6004:6004/tcp"
+    environment:
+      - NODE_ID=array_4
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-5:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-5
+    hostname: array-5
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_5', Vector2D(10.0, 3.0), 0.0)
+          node = ShadowNode('array_5', pos, is_coordinator=False,
+                          udp_port=5005, tcp_port=6005)
+          await node.start()
+          print('Array 5 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5005:5005/udp"
+      - "6005:6005/tcp"
+    environment:
+      - NODE_ID=array_5
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-6:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-6
+    hostname: array-6
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_6', Vector2D(10.0, 17.0), 0.0)
+          node = ShadowNode('array_6', pos, is_coordinator=False,
+                          udp_port=5006, tcp_port=6006)
+          await node.start()
+          print('Array 6 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5006:5006/udp"
+      - "6006:6006/tcp"
+    environment:
+      - NODE_ID=array_6
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-7:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-7
+    hostname: array-7
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_7', Vector2D(3.0, 10.0), 0.0)
+          node = ShadowNode('array_7', pos, is_coordinator=False,
+                          udp_port=5007, tcp_port=6007)
+          await node.start()
+          print('Array 7 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5007:5007/udp"
+      - "6007:6007/tcp"
+    environment:
+      - NODE_ID=array_7
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  array-8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-array-8
+    hostname: array-8
+    command: >
+      python -c "
+      import asyncio
+      from node.shadow_node import ShadowNode
+      from fusion.shadow_fusion import ArrayPosition, Vector2D
+      
+      async def main():
+          pos = ArrayPosition('array_8', Vector2D(17.0, 10.0), 0.0)
+          node = ShadowNode('array_8', pos, is_coordinator=False,
+                          udp_port=5008, tcp_port=6008)
+          await node.start()
+          print('Array 8 started')
+          
+          while True:
+              await asyncio.sleep(1)
+      
+      asyncio.run(main())
+      "
+    ports:
+      - "5008:5008/udp"
+      - "6008:6008/tcp"
+    environment:
+      - NODE_ID=array_8
+      - ROLE=worker
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      coordinator:
+        condition: service_healthy
+
+  # Simulation runner
+  simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shadow-simulator
+    command: >
+      python -c "
+      import asyncio
+      import time
+      from simulation.multi_array_sim import run_simulation
+      
+      async def main():
+          results = await run_simulation(duration=30, num_objects=10)
+          print('\nSimulation complete!')
+          print(f'Detected {results[\"global_objects_tracked\"]} objects')
+      
+      asyncio.run(main())
+      "
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - shadow-network
+    depends_on:
+      - coordinator
+      - array-1
+      - array-2
+      - array-3
+      - array-4
+      - array-5
+      - array-6
+      - array-7
+      - array-8
+    profiles:
+      - simulation
+
+networks:
+  shadow-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

@@ -1,0 +1,18 @@
+# Distributed Shadow Network Requirements
+# Python 3.12+
+
+# Core dependencies (stdlib only for production)
+# asyncio - included in Python 3.12+
+# dataclasses - included in Python 3.12+
+# typing - included in Python 3.12+
+
+# Development dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+
+# Optional: Performance monitoring
+# psutil>=5.9.0
+
+# Optional: Type checking
+# mypy>=1.5.0

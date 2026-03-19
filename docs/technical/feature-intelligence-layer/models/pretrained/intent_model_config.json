@@ -1,0 +1,1 @@
+{"input_shape": [64, 64, 1], "object_types": ["hand", "tool", "other"], "grasp_states": ["open", "closed", "pinching"], "interaction_intents": ["pointing", "manipulating", "resting"]}

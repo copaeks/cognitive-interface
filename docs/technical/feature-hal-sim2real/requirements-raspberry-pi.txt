@@ -1,0 +1,12 @@
+# Raspberry Pi specific dependencies
+# Install with: pip install -r requirements-raspberry-pi.txt
+
+RPi.GPIO>=0.7.0
+smbus2>=0.4.0
+spidev>=3.6
+sounddevice>=0.4.0
+pigpio>=1.78
+
+# CircuitPython libraries (optional, for advanced ADC support)
+# adafruit-blinka>=8.0.0
+# adafruit-circuitpython-mcp3xxx>=1.4.0

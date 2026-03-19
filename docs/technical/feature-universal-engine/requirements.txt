@@ -1,0 +1,16 @@
+# Universal Shadow Engine - Requirements
+# ========================================
+
+# Core dependencies (required)
+numpy>=1.24.0
+
+# Optional dependencies for enhanced functionality
+scipy>=1.10.0       # For STFT and signal processing
+numba>=0.57.0       # For JIT acceleration (highly recommended)
+
+# Development dependencies (for testing)
+pytest>=7.4.0
+pytest-cov>=4.1.0   # For coverage reporting
+
+# Documentation dependencies (optional)
+# sphinx>=7.0.0     # For documentation generation

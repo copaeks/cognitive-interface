@@ -1,0 +1,19 @@
+# Core dependencies
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Raspberry Pi dependencies (optional)
+# Install with: pip install -r requirements-raspberry-pi.txt
+# RPi.GPIO>=0.7.0
+# smbus2>=0.4.0
+# spidev>=3.6
+# sounddevice>=0.4.0
+# pigpio>=1.78
+
+# Development dependencies (optional)
+# Install with: pip install -r requirements-dev.txt
+# pytest>=7.0.0
+# pytest-cov>=4.0.0
+# mypy>=1.0.0
+# black>=23.0.0
+# ruff>=0.1.0

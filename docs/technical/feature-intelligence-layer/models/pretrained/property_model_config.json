@@ -1,0 +1,1 @@
+{"input_shape": [64, 64, 1], "materials": ["rigid", "soft", "liquid"], "size_categories": ["small", "medium", "large"]}
